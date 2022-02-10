@@ -1,11 +1,18 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { useState } from 'react'
 import { Button, Col, Form, Image, ListGroup, Row } from 'react-bootstrap'
 import { AiFillDelete } from 'react-icons/ai'
 import { CartState } from '../context/Context'
 import Rating from './Rating'
 
 const Cart = () => {
-  const {state: {cart}, dispatch, total} = CartState()
+  const {state: {cart}, dispatch} = CartState()
+
+  const [total, setTotal] = useState(0)
+
+  useEffect(() => {
+    setTotal(cart.reduce((acc, curr) => acc+ Number(curr.price)* curr.qty ,0))
+  }, [cart])
   return (
     <div className="home">
       <div className="productContainer">
